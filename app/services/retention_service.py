@@ -11,9 +11,8 @@ logger = get_logger(__name__)
 class RetentionService:
     """Сервис удержания пользователей."""
     
-    def __init__(self, db, bot):
+    def __init__(self, db):
         self.db = db
-        self.bot = bot
     
     async def send_retention_message(self, user_id: int) -> bool:
         """Отправить сообщение удержания."""
@@ -24,17 +23,13 @@ class RetentionService:
                 "🎁 Бонус для вас: +2 часа бесплатного доступа"
             )
             
-            # Отправить сообщение
-            if self.bot:
-                await self.bot.send_message(user_id, message)
-                logger.info(f"✅ Сообщение удержания отправлено пользователю {user_id}")
-                
-                # Дать бонус
-                await self.db.update_user(
-                    user_id,
-                    signals_unlocked_until=datetime.utcnow() + timedelta(hours=2)
-                )
-                return True
+            # Дать бонус
+            await self.db.update_user(
+                user_id,
+                signals_unlocked_until=datetime.utcnow() + timedelta(hours=2)
+            )
+            logger.info(f"✅ Сообщение удержания отправлено пользователю {user_id}")
+            return True
         except Exception as e:
             logger.error(f"❌ Ошибка отправки сообщения удержания: {e}")
             return False
