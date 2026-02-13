@@ -53,11 +53,11 @@ async def on_startup() -> None:
         dp = Dispatcher(storage=redis_storage)
         
         # Создать сервисы
-        subscription_service = SubscriptionService(bot)
-        soft_gate_service = SoftGateService(bot)
-        autoresponder_service = AutoResponderService(bot)
-        retention_service = RetentionService(bot)
-        postback_pro_service = PostbackProService(bot, soft_gate_service=soft_gate_service)
+        subscription_service = SubscriptionService(db)
+        soft_gate_service = SoftGateService(db)
+        autoresponder_service = AutoResponderService(db)
+        retention_service = RetentionService(db)
+        postback_pro_service = PostbackProService(db)
         
         # Сохранить сервисы в контекст
         dp.workflow_data["subscription_service"] = subscription_service
