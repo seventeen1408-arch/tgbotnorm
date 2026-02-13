@@ -7,7 +7,7 @@ from datetime import datetime
 from sqlalchemy import create_engine, select, URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import NullPool
+
 
 from app.core import config, get_logger
 from app.database.models import Base, User, Signal, Postback, Event, Subscription
@@ -40,10 +40,7 @@ class Database:
             self.engine = create_async_engine(
                 db_url,
                 echo=False,
-                pool_size=20,
-                max_overflow=0,
-                pool_pre_ping=True,
-                poolclass=NullPool
+                pool_pre_ping=True
             )
             
             # Создать фабрику сессий
