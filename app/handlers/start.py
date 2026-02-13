@@ -3,6 +3,7 @@
 """
 
 from aiogram import Router, F
+from aiogram.filters import Command
 from aiogram.types import Message
 from app.core import get_logger
 
@@ -10,7 +11,7 @@ logger = get_logger(__name__)
 router = Router()
 
 
-@router.message(commands=["start"])
+@router.message(Command("start"))
 async def cmd_start(message: Message, db, bot):
     """Обработчик команды /start."""
     user_id = message.from_user.id
