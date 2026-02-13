@@ -51,7 +51,7 @@ services:
       - 1.1.1.1
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
-      WEBHOOK_URL: ${WEBHOOK_URL:-https://tgbotlab.com}
+      WEBHOOK_URL: ${WEBHOOK_URL:-https://46.225.128.51}
       WEBHOOK_PATH: ${WEBHOOK_PATH:-/webhook}
       HOST: 0.0.0.0
       PORT: 8000
