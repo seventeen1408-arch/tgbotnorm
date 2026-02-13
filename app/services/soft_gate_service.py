@@ -46,3 +46,9 @@ class SoftGateService:
         """Отозвать доступ."""
         await self.db.update_user(user_id, signals_unlocked_until=None)
         logger.info(f"✅ Доступ отозван для пользователя {user_id}")
+    
+    async def check_and_unlock_signals(self):
+        """Проверить и разблокировать сигналы для пользователей."""
+        logger.info("🔍 Проверка и разблокировка сигналов...")
+        # Логика проверки и разблокировки
+        pass
