@@ -83,12 +83,6 @@ services:
       retries: 3
       start_period: 5s
 
-volumes:
-  postgres_data:
-    driver: local
-  redis_data:
-    driver: local
-
   # Cloudflare Tunnel для webhook
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -97,6 +91,12 @@ volumes:
     restart: always
     networks:
       - gambling_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
 
 networks:
   gambling_network:
