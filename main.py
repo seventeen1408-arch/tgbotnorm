@@ -49,6 +49,10 @@ async def on_startup() -> None:
         redis_storage = RedisStorage.from_url(config.REDIS_URL)
         logger.info("✅ Redis инициализирован")
         
+        # Создать бота
+        bot = Bot(token=config.BOT_TOKEN)
+        logger.info("✅ Бот инициализирован")
+        
         # Создать диспетчер
         dp = Dispatcher(storage=redis_storage)
         
