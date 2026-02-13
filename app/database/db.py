@@ -4,9 +4,10 @@
 
 from typing import Optional, List
 from datetime import datetime
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine, select, URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import NullPool
 
 from app.core import config, get_logger
 from app.database.models import Base, User, Signal, Postback, Event, Subscription
@@ -25,13 +26,24 @@ class Database:
     async def init(self):
         """Инициализировать подключение к БД."""
         try:
+            # Создать URL явно с asyncpg драйвером
+            db_url = URL.create(
+                drivername="postgresql+asyncpg",
+                username="gambling_user",
+                password="gambling_password",
+                host="postgres",
+                port=5432,
+                database="gambling_bot"
+            )
+            
             # Создать асинхронный движок
             self.engine = create_async_engine(
-                config.DATABASE_URL,
+                db_url,
                 echo=False,
                 pool_size=20,
                 max_overflow=0,
-                pool_pre_ping=True
+                pool_pre_ping=True,
+                poolclass=NullPool
             )
             
             # Создать фабрику сессий
