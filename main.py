@@ -20,7 +20,7 @@ from app.services.soft_gate_service import SoftGateService
 from app.services.autoresponder_service import AutoResponderService
 from app.services.retention_service import RetentionService
 from app.services.postback_pro_service import PostbackProService
-from app.handlers import start, signals, text_handler, vip_upsell, postback_pro
+from app.handlers import start, signals, text_handler, vip_upsell, postback_pro, help
 
 # Настроить логирование
 setup_logging()
@@ -74,9 +74,10 @@ async def on_startup() -> None:
         
         # Регистрировать роутеры
         dp.include_router(start.router)
+        dp.include_router(help.router)
         dp.include_router(signals.router)
-        dp.include_router(text_handler.router)
         dp.include_router(vip_upsell.router)
+        dp.include_router(text_handler.router)
         dp.include_router(postback_pro.router)
         
         logger.info("✅ Роутеры зарегистрированы")
