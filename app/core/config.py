@@ -6,6 +6,7 @@
 import os
 from typing import Optional
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 
 
 class Settings(BaseSettings):
@@ -51,9 +52,7 @@ class Settings(BaseSettings):
     POSTBACK_SECRET: Optional[str] = None
     POSTBACK_TIMEOUT: int = 30  # секунды
     
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    model_config = {"env_file": ".env", "extra": "allow"}
 
 
 # Инициализировать конфиг
