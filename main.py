@@ -103,19 +103,12 @@ async def on_startup() -> None:
         
         logger.info("✅ Планировщик запущен")
         
-        # Установить webhook через Cloudflare Tunnel
-        webhook_url = f"{config.WEBHOOK_URL}{config.WEBHOOK_PATH}/{config.BOT_TOKEN}"
-        try:
-            await bot.set_webhook(
-                url=webhook_url,
-                drop_pending_updates=True,
-                allowed_updates=dp.resolve_used_update_types()
-            )
-            logger.info(f"✅ Webhook установлен: {webhook_url}")
-        except Exception as e:
-            logger.warning(f"⚠️  Ошибка webhook: {e}")
-            logger.info("✅ Бот работает без webhook (polling)")
-            return  # Пропустить если webhook не работает
+        # Использовать polling вместо webhook
+        logger.info("✅ Бот работает в режиме polling")
+        logger.info("📡 Запуск polling для получения обновлений...")
+        
+        # Запустить polling в фоне
+        asyncio.create_task(dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types()))
         
         logger.info("=" * 60)
         logger.info("✅ БОТ ГОТОВ К РАБОТЕ!")
@@ -130,6 +123,14 @@ async def on_shutdown() -> None:
     """Завершение при остановке."""
     try:
         logger.info("🛑 Остановка бота...")
+        
+        # Удалить webhook если был установлен
+        if bot:
+            try:
+                await bot.delete_webhook(drop_pending_updates=True)
+                logger.info("✅ Webhook удален")
+            except Exception:
+                pass
         
         if scheduler:
             scheduler.shutdown()
