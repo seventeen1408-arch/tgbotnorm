@@ -103,14 +103,19 @@ async def on_startup() -> None:
         
         logger.info("✅ Планировщик запущен")
         
-        # Установить webhook
+        # Установить webhook через Cloudflare Tunnel
         webhook_url = f"{config.WEBHOOK_URL}{config.WEBHOOK_PATH}/{config.BOT_TOKEN}"
-        await bot.set_webhook(
-            url=webhook_url,
-            drop_pending_updates=True,
-            allowed_updates=dp.resolve_used_update_types()
-        )
-        logger.info(f"✅ Webhook установлен: {webhook_url}")
+        try:
+            await bot.set_webhook(
+                url=webhook_url,
+                drop_pending_updates=True,
+                allowed_updates=dp.resolve_used_update_types()
+            )
+            logger.info(f"✅ Webhook установлен: {webhook_url}")
+        except Exception as e:
+            logger.warning(f"⚠️  Ошибка webhook: {e}")
+            logger.info("✅ Бот работает без webhook (polling)")
+            return  # Пропустить если webhook не работает
         
         logger.info("=" * 60)
         logger.info("✅ БОТ ГОТОВ К РАБОТЕ!")

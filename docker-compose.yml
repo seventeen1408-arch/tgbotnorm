@@ -89,6 +89,15 @@ volumes:
   redis_data:
     driver: local
 
+  # Cloudflare Tunnel для webhook
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: gambling_bot_cloudflared
+    command: tunnel --no-autoupdate run --token eyJhIjoiYzgxODJlOGU4NzYwMWRlNzIxMjRiNmQzNmQyMGNlMDciLCJ0IjoiYWE1MGNhMWItNjE0ZC00MjYzLWEzYzctYmZjNzVlMTFkY2U1IiwicyI6Ik1UZ3lPR1pqWm1VdFpEUXlPUzAwT1RWaExUZ3paV1V0TUdZd016UTFNMkl4WmpReSJ9
+    restart: always
+    networks:
+      - gambling_network
+
 networks:
   gambling_network:
     driver: bridge
