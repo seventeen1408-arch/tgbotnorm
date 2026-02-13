@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     PORT: int = 8000
     
     # База данных
-    DATABASE_URL: str = "postgresql+asyncpg://user:password@postgres:5432/gambling_bot"
+    DATABASE_URL: str = "postgresql+asyncpg://gambling_user:gambling_password@postgres:5432/gambling_bot"
     
     # Redis
     REDIS_URL: str = "redis://redis:6379/0"
