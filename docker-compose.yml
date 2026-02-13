@@ -59,7 +59,7 @@ services:
       CASINO_LINK_2: ${CASINO_LINK_2:-https://vavada.uz}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
     ports:
-      - "8000:8000"
+      - "80:8000"
     depends_on:
       postgres:
         condition: service_healthy
