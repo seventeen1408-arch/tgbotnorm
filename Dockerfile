@@ -43,5 +43,5 @@ RUN mkdir -p logs
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:8000/health')" || exit 1
 
-# Запустить приложение
-CMD ["python", "main.py"]
+# Запустить приложение с SSL
+CMD ["python", "run_ssl.py"]
