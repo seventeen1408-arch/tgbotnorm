@@ -46,6 +46,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: gambling_bot_app
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
       WEBHOOK_URL: ${WEBHOOK_URL}
